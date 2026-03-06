@@ -1,0 +1,28 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import math 
+# Take the difference between the high and the low for every day and make a pie chart for the occurances 
+df = pd.read_csv('deathValley.csv')
+maxHumid = df['Max Humidity']
+minHumid = df['Min Humidity']
+differences = []
+
+for i in range(0, len(maxHumid)):
+    differences.append(maxHumid[i] - minHumid[i])
+print(differences)
+occur = []
+for i in range(0, 79):
+    occur.append(differences.count(i))
+print(occur)
+labels = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79"]
+occurs = []
+for i in range(0, len(labels)):
+    num = 10 * i 
+    occurs.append(sum(occur[num:num + 9]))
+print(labels)
+print(occurs)
+plt.figure(figsize=(5, 5))
+plt.title('Humidity Differences')
+plt.pie(occurs, labels=labels, autopct='%1.1f%%')
+plt.show()
